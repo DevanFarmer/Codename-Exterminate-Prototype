@@ -19,6 +19,8 @@ public class InputManager : MonoBehaviour
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Sprint.performed += ctx => motor.Sprint();
+
+        Cursor.visible = false;
     }
     
     void FixedUpdate()
