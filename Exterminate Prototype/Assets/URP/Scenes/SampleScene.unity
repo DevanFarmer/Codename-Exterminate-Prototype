@@ -239,6 +239,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  gravity: -9.8
+  jumpHeight: 3
+  lerpCrouch: 0
+  crouching: 0
+  crouchTimer: 0
+  sprinting: 0
+  runSpeed: 5
+  sprintSpeed: 8
 --- !u!114 &178483648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +259,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf9e9e84c06be140a9ff41c9ade2032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &178483653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178483646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad447b80cf8d4b419913552ec7ceaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1502934784}
+  xSensitivity: 30
+  ySensitivity: 30
 --- !u!1 &300677142
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,6 +1353,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395788250}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!20 &1502934784 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5865817055411999466, guid: f4e57011f6fe696479e68ee688dcc206,
+    type: 3}
+  m_PrefabInstance: {fileID: 5865817055172151075}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1630784846
 GameObject:
   m_ObjectHideFlags: 0

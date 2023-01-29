@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     private CharacterController controller;
+    private Transform cameraTransform;
     private Vector3 playerVelocity;
     private bool isGrounded;
     public float speed = 5f;
@@ -22,10 +23,12 @@ public class PlayerMotor : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        cameraTransform = Camera.main.transform;
     }
     
     void Update()
     {
+        #region Crouching
         isGrounded = controller.isGrounded;
 
         if (lerpCrouch)
@@ -48,6 +51,7 @@ public class PlayerMotor : MonoBehaviour
                 crouchTimer = 0f;
             }
         }
+        #endregion
     }
 
     public void ProcessMove(Vector2 input)
@@ -56,6 +60,7 @@ public class PlayerMotor : MonoBehaviour
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
+        moveDirection = cameraTransform.forward * moveDirection.z + cameraTransform.right * moveDirection.x;
         controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
 
         //GRAVITY
