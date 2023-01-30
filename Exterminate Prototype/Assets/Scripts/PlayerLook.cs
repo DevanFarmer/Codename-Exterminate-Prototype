@@ -1,25 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Shared_Models;
 
 public class PlayerLook : MonoBehaviour
 {
-    public Camera cam;
-    private float xRotation = 0f;
+    private Vector3 newCameraRotation;
+    private Vector3 newCharacterRotation;
 
-    public float xSensitivity = 30f;
-    public float ySensitivity = 30f;
+    [Header("References")]
+    public Transform cameraHolder;
+
+    [Header("Settings")]
+    public ViewSettings viewSettings;
+    float yMinClamp = -70f;
+    float yMaxClamp = 80f;
+
+    private void Awake()
+    {
+        newCameraRotation = cameraHolder.localRotation.eulerAngles;
+        newCharacterRotation = transform.localRotation.eulerAngles;
+    }
 
     public void ProcessLook(Vector2 input)
     {
         float mouseX = input.x;
         float mouseY = input.y;
-        //calculate camera rotation for looking up and down
-        xRotation -= (mouseY * Time.smoothDeltaTime) * ySensitivity;
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-        //apply to camera transform
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        //rotate player to look left and right
-        transform.Rotate(Vector3.up * (mouseX * Time.smoothDeltaTime) * xSensitivity);
+
+        //Rotate the Player to look left and right
+        newCharacterRotation.y += viewSettings.xSensitivity * mouseX * Time.deltaTime;
+        transform.localRotation = Quaternion.Euler(newCharacterRotation);
+
+        //Rotate the Camera Holder to look up and down
+        newCameraRotation.x += viewSettings.ySensitivity * -mouseY * Time.deltaTime;
+        newCameraRotation.x = Mathf.Clamp(newCameraRotation.x, yMinClamp, yMaxClamp);
+
+        cameraHolder.localRotation = Quaternion.Euler(newCameraRotation);
     }
 }

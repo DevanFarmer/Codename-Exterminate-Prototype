@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Shared_Models;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerMotor : MonoBehaviour
     private Transform cameraTransform;
     private Vector3 playerVelocity;
     private bool isGrounded;
-    public float speed = 5f;
+    public float speed ;
     public float gravity = -9.8f;
     public float jumpHeight = 3f;
 
@@ -19,6 +20,14 @@ public class PlayerMotor : MonoBehaviour
     public bool sprinting;
     public float runSpeed = 5f;
     public float sprintSpeed = 8f;
+
+    [Header("Settings")]
+    public MovementSettings movementSettings;
+
+    private void Awake()
+    {
+        speed = movementSettings.WalkingSpeed;
+    }
 
     void Start()
     {
@@ -57,11 +66,13 @@ public class PlayerMotor : MonoBehaviour
     public void ProcessMove(Vector2 input)
     {
         //MOVEMENT
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
-        moveDirection = cameraTransform.forward * moveDirection.z + cameraTransform.right * moveDirection.x;
-        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+        var horizontalSpeed = speed * input.x * Time.deltaTime;
+        var verticalSpeed = speed * input.y * Time.deltaTime;
+
+        var newMovementSpeed = new Vector3(horizontalSpeed, 0f, verticalSpeed);
+        newMovementSpeed = transform.TransformDirection(newMovementSpeed);
+
+        controller.Move(newMovementSpeed);
 
         //GRAVITY
         playerVelocity.y += gravity * Time.deltaTime;
@@ -92,11 +103,11 @@ public class PlayerMotor : MonoBehaviour
         sprinting = !sprinting;
         if (sprinting)
         {
-            speed = sprintSpeed;
+            speed = movementSettings.RunningSpeed;
         }
         else
         {
-            speed = runSpeed;
+            speed = movementSettings.WalkingSpeed;
         }
     }
 }
