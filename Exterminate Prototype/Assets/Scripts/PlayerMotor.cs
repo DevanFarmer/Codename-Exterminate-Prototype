@@ -9,17 +9,15 @@ public class PlayerMotor : MonoBehaviour
     private Transform cameraTransform;
     private Vector3 playerVelocity;
     private bool isGrounded;
-    public float speed ;
-    public float gravity = -9.8f;
-    public float jumpHeight = 3f;
+    public float speed;
+    private float gravity;
+    private float jumpHeight;
 
     public bool lerpCrouch;
     public bool crouching;
     public float crouchTimer;
 
     public bool sprinting;
-    public float runSpeed = 5f;
-    public float sprintSpeed = 8f;
 
     [Header("Settings")]
     public MovementSettings movementSettings;
@@ -27,6 +25,8 @@ public class PlayerMotor : MonoBehaviour
     private void Awake()
     {
         speed = movementSettings.WalkingSpeed;
+        gravity = movementSettings.gravity;
+        jumpHeight = movementSettings.jumpHeight;
     }
 
     void Start()

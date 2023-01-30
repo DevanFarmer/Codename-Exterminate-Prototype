@@ -18,10 +18,13 @@ public static class Shared_Models
     [Serializable]
     public class MovementSettings
     {
-        [Header("Movement Settings")]
+        [Header("Movement")]
         public float WalkingSpeed;
         public float RunningSpeed;
 
+        [Header("Jumping")]
+        public float gravity;
+        public float jumpHeight;
     }
 
     #endregion
