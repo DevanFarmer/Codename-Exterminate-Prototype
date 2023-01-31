@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb133e5379df4314f8a7d72379affbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
   speed: 5
   lerpCrouch: 0
   crouching: 0
@@ -158,6 +159,7 @@ MonoBehaviour:
   movementSettings:
     WalkingSpeed: 8
     RunningSpeed: 12
+    inAirSpeed: 6
     gravity: -25
     jumpHeight: 1.75
 --- !u!114 &2914196583322299056

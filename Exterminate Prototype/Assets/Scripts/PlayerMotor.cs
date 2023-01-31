@@ -8,7 +8,7 @@ public class PlayerMotor : MonoBehaviour
     private CharacterController controller;
     private Transform cameraTransform;
     private Vector3 playerVelocity;
-    private bool isGrounded;
+    public bool isGrounded;
     public float speed;
     private float gravity;
     private float jumpHeight;
@@ -61,6 +61,21 @@ public class PlayerMotor : MonoBehaviour
             }
         }
         #endregion
+
+        #region Jumping & Sprinting
+        if (!isGrounded)
+        {
+            speed = movementSettings.inAirSpeed;
+        }
+        else if (sprinting)
+        {
+            speed = movementSettings.RunningSpeed;
+        }
+        else
+        {
+            speed = movementSettings.WalkingSpeed;
+        }
+        #endregion
     }
 
     public void ProcessMove(Vector2 input)
@@ -101,13 +116,5 @@ public class PlayerMotor : MonoBehaviour
     public void Sprint()
     {
         sprinting = !sprinting;
-        if (sprinting)
-        {
-            speed = movementSettings.RunningSpeed;
-        }
-        else
-        {
-            speed = movementSettings.WalkingSpeed;
-        }
     }
 }

@@ -21,6 +21,7 @@ public static class Shared_Models
         [Header("Movement")]
         public float WalkingSpeed;
         public float RunningSpeed;
+        public float inAirSpeed;
 
         [Header("Jumping")]
         public float gravity;
