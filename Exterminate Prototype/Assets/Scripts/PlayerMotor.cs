@@ -6,17 +6,21 @@ using static Shared_Models;
 public class PlayerMotor : MonoBehaviour
 {
     private CharacterController controller;
-    private Transform cameraTransform;
     private Vector3 playerVelocity;
-    public bool isGrounded;
+    private bool isGrounded;
+
+    [Header("Movement")]
     public float speed;
     private float gravity;
     private float jumpHeight;
-
+    
+    [Header("Crouch")]
     public bool lerpCrouch;
     public bool crouching;
     public float crouchTimer;
 
+    [Header("Sprint")]
+    public bool toggleSprint;
     public bool sprinting;
 
     [Header("Settings")]
@@ -27,12 +31,12 @@ public class PlayerMotor : MonoBehaviour
         speed = movementSettings.WalkingSpeed;
         gravity = movementSettings.gravity;
         jumpHeight = movementSettings.jumpHeight;
+        toggleSprint = movementSettings.toggleSprint;
     }
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        cameraTransform = Camera.main.transform;
     }
     
     void Update()

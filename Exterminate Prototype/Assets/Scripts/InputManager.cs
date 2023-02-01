@@ -31,6 +31,11 @@ public class InputManager : MonoBehaviour
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
         //tell the playermotor to move using the value given from movement action
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        //check if sprinting it toggled
+        if (motor.toggleSprint)
+        {
+            onFoot.Sprint.canceled += ctx => motor.Sprint();
+        }
     }
 
     private void OnEnable()

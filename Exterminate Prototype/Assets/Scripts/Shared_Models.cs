@@ -26,6 +26,9 @@ public static class Shared_Models
         [Header("Jumping")]
         public float gravity;
         public float jumpHeight;
+
+        [Header("Sprinting")]
+        public bool toggleSprint;
     }
 
     #endregion
