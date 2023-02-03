@@ -1648,16 +1648,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 149778503785014339, guid: e7d3f53b397fbd742850d2dd2ae739c5,
-        type: 3}
-      propertyPath: movementSettings.inAirSpeed
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 149778503785014339, guid: e7d3f53b397fbd742850d2dd2ae739c5,
-        type: 3}
-      propertyPath: movementSettings.toggleSprint
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5195643408201214322, guid: e7d3f53b397fbd742850d2dd2ae739c5,
         type: 3}
       propertyPath: m_Name
