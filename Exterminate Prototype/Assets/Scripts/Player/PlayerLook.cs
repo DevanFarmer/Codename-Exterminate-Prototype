@@ -16,6 +16,9 @@ public class PlayerLook : MonoBehaviour
     float yMinClamp = -70f;
     float yMaxClamp = 80f;
 
+    [Header("Weapon")]
+    [SerializeField] private Transform weaponParent;
+
     private void Awake()
     {
         newCameraRotation = cameraHolder.localRotation.eulerAngles;
@@ -35,6 +38,9 @@ public class PlayerLook : MonoBehaviour
         newCameraRotation.x += viewSettings.ySensitivity * -mouseY * Time.deltaTime;
         newCameraRotation.x = Mathf.Clamp(newCameraRotation.x, yMinClamp, yMaxClamp);
 
+        //Rotate Camera
         cameraHolder.localRotation = Quaternion.Euler(newCameraRotation);
+        //Rotate Weapon
+        weaponParent.localRotation = Quaternion.Euler(newCameraRotation);
     }
 }
