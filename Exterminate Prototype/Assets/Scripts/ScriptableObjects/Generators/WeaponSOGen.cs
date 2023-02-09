@@ -7,4 +7,6 @@ public class WeaponSOGen : ScriptableObject
 {
     public string weaponName;
     public GameObject weaponPrefab;
+    public float damage;
+    public float range;
 }

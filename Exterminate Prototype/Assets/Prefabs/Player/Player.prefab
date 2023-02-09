@@ -210,6 +210,7 @@ MonoBehaviour:
   loadout:
   - {fileID: 11400000, guid: b7e886e9118ae154ca82732a873a4862, type: 2}
   weaponParent: {fileID: 6593295852444664477}
+  fpsCam: {fileID: 6013307475107350294}
 --- !u!1 &5677908353998014728
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +383,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.139
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0

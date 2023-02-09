@@ -15,3 +15,5 @@ MonoBehaviour:
   weaponName: Basic Assault Rifle
   weaponPrefab: {fileID: 2439423883153818914, guid: 86889fbace7bb8c4b8458fb1dc4946e9,
     type: 3}
+  damage: 10
+  range: 100
