@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91fc64e3717a0a240a4431c0b2c4d59d, type: 3}
+  m_Script: {fileID: 11500000, guid: 61775eb79b905e444b9a1b695e1b0d1f, type: 3}
   m_Name: Basic Assault Rifle
   m_EditorClassIdentifier: 
   weaponName: Basic Assault Rifle
@@ -17,3 +17,9 @@ MonoBehaviour:
     type: 3}
   damage: 10
   range: 100
+  FireRate: 0
+  auto: 0
+  maxAmmo: 0
+  clipSize: 3
+  ammoInClip: 3
+  reloadTime: 3
