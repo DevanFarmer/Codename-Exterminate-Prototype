@@ -30,6 +30,8 @@ public class InputManager : MonoBehaviour
         playerWeapon = GetComponent<Weapon>();
 
         weapon.PrimaryFire.performed += ctx => playerWeapon.Shoot();
+        //weapon.SecondaryFire.performed += ctx +> playerWeapon.AltFire();
+        weapon.Reload.performed += ctx => playerWeapon.ReloadWeapon();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }

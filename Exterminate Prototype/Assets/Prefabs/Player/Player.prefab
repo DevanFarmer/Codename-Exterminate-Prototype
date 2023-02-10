@@ -210,6 +210,7 @@ MonoBehaviour:
   loadout:
   - {fileID: 11400000, guid: b7e886e9118ae154ca82732a873a4862, type: 2}
   weaponParent: {fileID: 6593295852444664477}
+  isReloading: 0
   fpsCam: {fileID: 6013307475107350294}
 --- !u!1 &5677908353998014728
 GameObject:

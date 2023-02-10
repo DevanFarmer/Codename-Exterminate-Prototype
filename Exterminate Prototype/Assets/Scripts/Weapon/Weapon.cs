@@ -11,10 +11,11 @@ public class Weapon : MonoBehaviour
     private int currentWeaponIndex = -1;
     private PlayerWeapon currentWeapon;
 
-    private float damage;
-    private float range;
+    [SerializeField] private bool isReloading = false;
+    [SerializeField] private bool readyToShoot = true;
+    [SerializeField] private float nextTimeToFire = 0f;
 
-    private bool isReloading = false;
+
     private Animator animator;
 
     [SerializeField] private Camera fpsCam;
@@ -22,39 +23,32 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         Equip(0);
-        damage = currentWeapon.damage;
-        range = currentWeapon.range;
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isReloading)
-        {
-            Equip(0);
-        }
-
         if (isReloading)
         {
             return;
         }
 
-        if (currentWeapon.ammoInClip <= 0)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            StartCoroutine(Reload());
-            return;
+            Equip(0);
         }
 
-/*        if (Input.GetButtonDown("Fire1"))
+        if (currentWeapon.ammoInClip <= 0)
         {
-            Shoot();
-        }*/
+            ReloadWeapon();
+            return;
+        }
     }
 
     void Equip(int loadoutIndex)
     {
         //Prevent creating same weapon
-        if (currentWeaponIndex == loadoutIndex)
+        if ((currentWeaponIndex == loadoutIndex) || loadoutIndex >= loadout.Length)
         {
             return;
         }
@@ -72,32 +66,40 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (isReloading)
+        if (isReloading || !readyToShoot)
         {
             return;
         }
+        readyToShoot = false;
+
         currentWeapon.ammoInClip--;
 
         //Play muzzleflash particles
 
         RaycastHit hit;
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, currentWeapon.range))
         {
             Target target = hit.transform.GetComponent<Target>();
 
             if (target != null)
             {
-                target.TakeDamage(damage);
+                target.TakeDamage(currentWeapon.damage);
             }
-
-            //Debug.Log(hit.transform.name);
         }
 
+        Invoke("ResetShot", currentWeapon.fireRate);
         Debug.Log("Pew");
+    }
+
+    private void ResetShot()
+    {
+        readyToShoot = true;
     }
 
     IEnumerator Reload()
     {
+        readyToShoot = false;
+
         isReloading = true;
         Debug.Log("Reloading...");
 
@@ -111,5 +113,20 @@ public class Weapon : MonoBehaviour
 
         currentWeapon.ammoInClip = currentWeapon.clipSize;
         isReloading = false;
+
+        readyToShoot = true;
+    }
+
+    public void ReloadWeapon()
+    {
+        if (isReloading)
+        {
+            return;
+        }
+        if (currentWeapon.ammoInClip == currentWeapon.clipSize)
+        {
+            return;
+        }
+        StartCoroutine(Reload());
     }
 }
