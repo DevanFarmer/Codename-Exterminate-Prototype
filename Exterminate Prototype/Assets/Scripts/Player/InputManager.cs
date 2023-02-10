@@ -7,21 +7,29 @@ public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     private PlayerInput.OnFootActions onFoot;
+    private PlayerInput.WeaponActions weapon;
 
     private PlayerMotor motor;
     private PlayerLook look;
+    private Weapon playerWeapon;
 
     void Awake()
     {
         playerInput = new PlayerInput();
+        //OnFoot Inputs
         onFoot = playerInput.OnFoot;
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
-        onFoot.Jump.performed += ctx => motor.Jump();
 
+        onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Sprint.performed += ctx => motor.Sprint();
 
+        //Weapon inputs
+        weapon = playerInput.Weapon;
+        playerWeapon = GetComponent<Weapon>();
+
+        weapon.PrimaryFire.performed += ctx => playerWeapon.Shoot();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
@@ -36,15 +44,19 @@ public class InputManager : MonoBehaviour
         {
             onFoot.Sprint.canceled += ctx => motor.Sprint();
         }
+
+
     }
 
     private void OnEnable()
     {
         onFoot.Enable();
+        weapon.Enable();
     }
 
     private void OnDisable()
     {
         onFoot.Disable();
+        weapon.Disable();
     }
 }

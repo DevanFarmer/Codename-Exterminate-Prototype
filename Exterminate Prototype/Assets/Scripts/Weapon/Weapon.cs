@@ -45,10 +45,10 @@ public class Weapon : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1"))
+/*        if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
-        }
+        }*/
     }
 
     void Equip(int loadoutIndex)
@@ -70,8 +70,12 @@ public class Weapon : MonoBehaviour
         currentWeapon = loadout[loadoutIndex];
     }
 
-    void Shoot()
+    public void Shoot()
     {
+        if (isReloading)
+        {
+            return;
+        }
         currentWeapon.ammoInClip--;
 
         //Play muzzleflash particles
@@ -86,8 +90,10 @@ public class Weapon : MonoBehaviour
                 target.TakeDamage(damage);
             }
 
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
         }
+
+        Debug.Log("Pew");
     }
 
     IEnumerator Reload()

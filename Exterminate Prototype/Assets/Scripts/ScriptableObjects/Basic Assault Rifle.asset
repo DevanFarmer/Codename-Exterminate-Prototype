@@ -20,6 +20,6 @@ MonoBehaviour:
   FireRate: 0
   auto: 0
   maxAmmo: 0
-  clipSize: 3
-  ammoInClip: 3
+  clipSize: 10
+  ammoInClip: 0
   reloadTime: 3
