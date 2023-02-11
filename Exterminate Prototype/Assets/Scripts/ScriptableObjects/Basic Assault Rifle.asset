@@ -17,9 +17,9 @@ MonoBehaviour:
     type: 3}
   damage: 10
   range: 100
-  FireRate: 0
-  auto: 0
+  fireRate: 5
+  auto: 1
   maxAmmo: 0
   clipSize: 10
-  ammoInClip: 0
-  reloadTime: 3
+  ammoInClip: 10
+  reloadTime: 2

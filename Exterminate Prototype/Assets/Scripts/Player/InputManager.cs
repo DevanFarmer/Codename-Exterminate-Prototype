@@ -13,10 +13,13 @@ public class InputManager : MonoBehaviour
     private PlayerLook look;
     private Weapon playerWeapon;
 
+    public bool firing;
+
     void Awake()
     {
         playerInput = new PlayerInput();
-        //OnFoot Inputs
+
+        #region OnFoot Inputs
         onFoot = playerInput.OnFoot;
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
@@ -25,13 +28,21 @@ public class InputManager : MonoBehaviour
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Sprint.performed += ctx => motor.Sprint();
 
-        //Weapon inputs
+        #endregion
+
+        #region Weapon Inputs
         weapon = playerInput.Weapon;
         playerWeapon = GetComponent<Weapon>();
 
-        weapon.PrimaryFire.performed += ctx => playerWeapon.Shoot();
+        //Activates firing variable to shoot and deactivates to stop shooting
+        weapon.PrimaryFire.performed += ctx => ActivateFiring();
+        weapon.PrimaryFire.canceled += ctx => DeactivateFiring();
+
         //weapon.SecondaryFire.performed += ctx +> playerWeapon.AltFire();
         weapon.Reload.performed += ctx => playerWeapon.ReloadWeapon();
+
+        #endregion
+
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
@@ -46,10 +57,21 @@ public class InputManager : MonoBehaviour
         {
             onFoot.Sprint.canceled += ctx => motor.Sprint();
         }
-
-
     }
 
+    #region ToggleFiring
+    void ActivateFiring()
+    {
+        firing = true;
+    }
+
+    public void DeactivateFiring()
+    {
+        firing = false;
+    }
+    #endregion
+
+    #region OnEnable/OnDisable 
     private void OnEnable()
     {
         onFoot.Enable();
@@ -61,4 +83,5 @@ public class InputManager : MonoBehaviour
         onFoot.Disable();
         weapon.Disable();
     }
+    #endregion
 }

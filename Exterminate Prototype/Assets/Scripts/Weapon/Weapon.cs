@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    private InputManager inputManager;
+
     [Header("Equiping")]
     public PlayerWeapon[] loadout;
     public Transform weaponParent;
 
     private int currentWeaponIndex = -1;
-    private PlayerWeapon currentWeapon;
+    public PlayerWeapon currentWeapon;
 
     [SerializeField] private bool isReloading = false;
     [SerializeField] private bool readyToShoot = true;
-    [SerializeField] private float nextTimeToFire = 0f;
+    //[SerializeField] private float nextTimeToFire = 0f;
 
     private ParticleSystem muzzleFlash;
 
@@ -21,11 +23,15 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private Camera fpsCam;
 
+    private void Awake()
+    {
+        inputManager = GetComponent<InputManager>();
+    }
+
     void Start()
     {
         Equip(0);
     }
-
 
     void Update()
     {
@@ -44,6 +50,8 @@ public class Weapon : MonoBehaviour
             ReloadWeapon();
             return;
         }
+
+        Shoot();
     }
 
     void Equip(int loadoutIndex)
@@ -68,10 +76,10 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (isReloading || !readyToShoot)
-        {
-            return;
-        }
+        if (isReloading) return;
+        if (!readyToShoot) return;
+        if (!inputManager.firing) return;
+
         readyToShoot = false;
 
         currentWeapon.ammoInClip--;
@@ -79,6 +87,7 @@ public class Weapon : MonoBehaviour
         //Play muzzleflash particles
         muzzleFlash.Play();
 
+        //Fire Raycast
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, currentWeapon.range))
         {
@@ -90,8 +99,13 @@ public class Weapon : MonoBehaviour
             }
         }
 
-        Invoke("ResetShot", currentWeapon.fireRate);
-        Debug.Log("Pew");
+        Invoke("ResetShot", 1f/currentWeapon.fireRate);
+
+        //Reset variable to false to only allow shooting every press of the fire button
+        if (!currentWeapon.auto)
+        {
+            inputManager.DeactivateFiring();
+        }
     }
 
     private void ResetShot()
@@ -117,7 +131,7 @@ public class Weapon : MonoBehaviour
         currentWeapon.ammoInClip = currentWeapon.clipSize;
         isReloading = false;
 
-        readyToShoot = true;
+        ResetShot();
     }
 
     public void ReloadWeapon()
