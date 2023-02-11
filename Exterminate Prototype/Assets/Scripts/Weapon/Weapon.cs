@@ -15,6 +15,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private bool readyToShoot = true;
     [SerializeField] private float nextTimeToFire = 0f;
 
+    private ParticleSystem muzzleFlash;
 
     private Animator animator;
 
@@ -59,6 +60,7 @@ public class Weapon : MonoBehaviour
 
         isReloading = false;
         animator = weapon.GetComponent<Animator>();
+        muzzleFlash = GetComponentInChildren<ParticleSystem>();
 
         currentWeaponIndex = loadoutIndex;
         currentWeapon = loadout[loadoutIndex];
@@ -75,6 +77,7 @@ public class Weapon : MonoBehaviour
         currentWeapon.ammoInClip--;
 
         //Play muzzleflash particles
+        muzzleFlash.Play();
 
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, currentWeapon.range))
